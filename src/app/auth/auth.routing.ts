@@ -1,12 +1,13 @@
+import { RegisterComponent } from './register/register.component';
 /**
  * Created by souaibou on 12/01/2018.
  */
 import {RouterModule, Routes} from '@angular/router';
-import {AuthComponent} from "./auth.component";
-import {LoginComponent} from "./login/login.component";
+import {AuthComponent} from './auth.component';
+import {LoginComponent} from './login/login.component';
 
 
-const APP_ROUTES : Routes = [
+const APP_ROUTES: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
@@ -18,6 +19,10 @@ const APP_ROUTES : Routes = [
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: 'register',
+        component: RegisterComponent
       }
     ],
   },
