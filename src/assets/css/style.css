@@ -8916,9 +8916,10 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
  ========================================= */
 .common-img-bg {
   background-size: cover;
-  background: url(../images/bg.jpg) no-repeat center center fixed;
-  height: 100%; }
-  @media only screen and (max-width: 992px) {
+  background: url('http://www.hd-wallpaper1.com/images/university-columbia.jpeg') no-repeat center center fixed;
+  height: 100%; 
+}
+  @media only screen and (max-width: 1000px) {
     .common-img-bg {
       background: #f3f3f3 !important; } }
 

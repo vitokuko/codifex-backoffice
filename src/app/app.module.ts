@@ -2,11 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {routing} from "./app.routing";
+import {routing} from './app.routing';
 import { HomeComponent } from './home/home.component';
-import {HomeModule} from "./home/home.module";
+import {HomeModule} from './home/home.module';
 import { AuthComponent } from './auth/auth.component';
-import {AuthModule} from "./auth/auth.module";
+import {AuthModule} from './auth/auth.module';
+import { FormsModule } from '@angular/forms';
+import {SpinnerModule} from "angular2-spinner/dist";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {AuthModule} from "./auth/auth.module";
     BrowserModule,
     routing,
     HomeModule,
-    AuthModule
+    AuthModule,
+    FormsModule,
+    SpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
