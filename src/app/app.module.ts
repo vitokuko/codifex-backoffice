@@ -9,6 +9,7 @@ import { AuthComponent } from './auth/auth.component';
 import {AuthModule} from './auth/auth.module';
 import { FormsModule } from '@angular/forms';
 import {SpinnerModule} from "angular2-spinner/dist";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {SpinnerModule} from "angular2-spinner/dist";
     HomeModule,
     AuthModule,
     FormsModule,
-    SpinnerModule
+    SpinnerModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,19 +1,24 @@
 export class Pavillon {
-  private _libelle : String;
+  private _label : String;
+  private _id : String;
 
-  constructor(libelle: string) {
-    this._libelle = libelle;
+  constructor(){}
+
+  get id(): String {
+    return this._id;
   }
 
-
-  get libelle(): String {
-    return this._libelle;
+  get label(): String {
+    return this._label;
   }
 
-  set libelle(value: String) {
-    this._libelle = value;
+  set label(value: String) {
+    this._label = value;
   }
 
+  getPavillon(value:Pavillon){
+    this._label = value.label;
+  }
 
 
 }
