@@ -1,0 +1,346 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>Pavillons</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="#!">
+              <i class="icofont icofont-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a>Pavillon</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+          <div class="col-lg-6">
+            <form #myFormPavillon="ngForm" (ngSubmit)="addPavillon(myFormPavillon)"  novalidate>
+              <div class="card card-border-primary">
+              <div class="card-header">
+                <h5>Pavillon </h5>
+                <!-- <span class="label label-default f-right"> 28 January, 2015 </span> -->
+                <div class="dropdown-secondary dropdown f-right">
+                  <button class="btn btn-primary btn-mini waves-effect waves-light">{{myFormPavillon.form.status}}</button>
+                  <!-- end of dropdown menu -->
+                  <span class="f-left m-r-5 text-inverse">Status : </span>
+                </div>
+              </div>
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-sm-8">
+                    <ul class="list list-unstyled">
+                      <li>
+                        <div class="form-group row">
+                          <div class="col-sm-12">
+                            <input type="text" name="label" class="form-control" placeholder="Entrer le nom du pavillon" #label="ngModel"  [pattern]="pattPavillon" [class.form-control-danger]="label.invalid && label.touched" ngModel required>
+                          </div>
+                        </div>
+                      </li>
+                      <li>Exemple: Pavillon-A</li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-4">
+                    <ul class="list list-unstyled text-right">
+                      <li><button type="submit" class="btn btn-info btn-round"><i class="icofont icofont-emo-nerd-smile"></i>valider</button></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="task-list-table">
+                  <p class="task-due"><strong> NB : </strong><strong class="label label-success">pas de duplication de Pavillon</strong></p>
+                </div>
+                <!-- end of pull-right class -->
+              </div>
+              <!-- end of card-footer -->
+            </div>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <form #myFormEtage="ngForm" (ngSubmit)="addEtage(myFormEtage)"  novalidate>
+              <!-- Invoice list card start -->
+              <div class="card card-border-primary">
+                <div class="card-header">
+                  <h5>Étage </h5>
+                  <!-- <span class="label label-default f-right"> 28 January, 2015 </span> -->
+                  <div class="dropdown-secondary dropdown f-right">
+                    <button class="btn btn-primary btn-mini waves-effect waves-light">{{myFormEtage.form.status}}</button>
+                    <!-- end of dropdown menu -->
+                    <span class="f-left m-r-5 text-inverse">Status : </span>
+                  </div>
+                </div>
+                <div class="card-block">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <ul class="list list-unstyled">
+                        <li>
+                          <div class="form-group row">
+                            <div class="col-sm-12">
+                              <input type="text" name="label" class="form-control" placeholder="Entrer le nom de l'étage" #label="ngModel"  [pattern]="pattEtage" [class.form-control-danger]="label.invalid && label.touched" ngModel required>
+                            </div>
+                          </div>
+                        </li>
+                        <li>Exemple: Etage-1</li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-4">
+                      <ul class="list list-unstyled text-right">
+                        <li><button type="submit" class="btn btn-info btn-round"><i class="icofont icofont-emo-nerd-smile"></i>valider</button></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="task-list-table">
+                    <p class="task-due"><strong> NB : </strong><strong class="label label-success">Pas de duplication de Étage, veuillez regarder le nombre max d'étage avant d'ajouter</strong></p>
+                  </div>
+                  <!-- end of pull-right class -->
+                </div>
+                <!-- end of card-footer -->
+              </div>
+              <!-- Invoice list card end -->
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>Informations</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="#!">
+              <i class="icofont icofont-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a>Information</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-4 col-xl-4">
+          <!-- widget primary card start -->
+          <div class="card table-card widget-primary-card">
+            <div class="">
+              <div class="row-table">
+                <div class="col-sm-3 card-block-big">
+                  <i class="icofont icofont-hospital"></i>
+                </div>
+                <div class="col-sm-9">
+                  <h4>{{pavillonClasse.length}}</h4>
+                  <h6>Pavillon</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- widget primary card end -->
+        </div>
+        <div class="col-md-4 col-xl-4">
+          <!-- widget-success-card start -->
+          <div class="card table-card widget-primary-card">
+            <div class="">
+              <div class="row-table">
+                <div class="col-sm-3 card-block-big">
+                  <i class="icofont icofont-hospital"></i>
+                </div>
+                <div class="col-sm-9">
+                  <h4>{{etageClasse.length}}</h4>
+                  <h6>Étage (max parmis les pavillons)</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- widget-success-card end -->
+        </div>
+        <div class="col-md-4 col-xl-4">
+          <!-- widget-success-card start -->
+          <div class="card table-card widget-primary-card">
+            <div class="">
+              <div class="row-table">
+                <div class="col-sm-3 card-block-big">
+                  <i class="icofont icofont-hospital"></i>
+                </div>
+                <div class="col-sm-9">
+                  <h4>0</h4>
+                  <h6>Chambre (max parmis les pavillons)</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- widget-success-card end -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>Déclarations</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="#!">
+              <i class="icofont icofont-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a>Déclaration</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Basic Form Inputs card start -->
+          <div class="card">
+            <div class="card-header">
+              <h5>Formulaire</h5>
+              <span>Etablir la relation <code>&lt;Pavillon&gt;</code> avec <code>&lt;Etage&gt;</code> <span>ET ajouter les <code>&lt;Chambre&gt;</code> !</span></span>
+              <div class="card-header-right">
+                <i class="icofont icofont-rounded-down"></i>
+                <i class="icofont icofont-refresh"></i>
+              </div>
+            </div>
+            <div class="card-block">
+              <form #myFormRelation="ngForm" (ngSubmit)="addRelation(myFormRelation)" novalidate>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Pavillon</label>
+                  <div class="col-sm-8">
+                    <select name="selectPavillon" class="form-control" #selectPavillon="ngModel" ngModel required>
+                      <option disabled value="" selected hidden>Selectionner une valeur seulement</option>
+                      <option value="{{list.id}}" *ngFor="let list of pavillonClasse" >{{list.label}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Etage</label>
+                  <div class="col-sm-8">
+                    <select name="selectEtage" class="form-control form-bg-primary" #selectEtage="ngModel" ngModel required>
+                      <option disabled value="" selected hidden>Selectionner une valeur seulement</option>
+                      <option value="{{list.id}}" *ngFor="let list of etageClasse" >{{list.label}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Intervalle - Chambre</label>
+                  <div class="col-sm-8">
+                    <ion-range-slider #advancedSliderElement
+                                      type="double"
+                                      min="0"
+                                      max="100"
+                                      from="0"
+                                      from_min="0"
+                                      from_max="60"
+                                      from_shadow="true"
+                                      to="10"
+                                      to_min="10"
+                                      to_max="100"
+                                      to_shadow="true"
+                                      grid="true"
+                                      grid_num="5"
+                                      prefix=" "
+                                      postfix=" "
+                                      max_postfix="Max "
+                                      decorate_both="true"
+                                      (onUpdate)="update(advancedSliderElement, $event)"
+                                      (onChange)="update(advancedSliderElement, $event)"
+                                      (onFinish)="finish(advancedSliderElement, $event)"></ion-range-slider>
+                  </div>
+                </div>
+                <br>
+                <hr>
+                <br>
+                <div class="row offset-sm-3 col-sm-6 offset-sm-3">
+                  <button type="submit" class="btn btn-primary btn-outline-primary btn-block"><i class="icofont icofont-emo-nerd-smile"></i>valider</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Basic Form Inputs card end -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>Visualisation(temps reel)</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="#!">
+              <i class="icofont icofont-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a>Visualisation</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Hover table card start -->
+          <div class="card">
+            <div class="card-header">
+              <h5>Tableau de liaison </h5>
+              <span>Champs <code>Pavillon</code> , <code>Etage</code> Et <code>Intervalle Chambre</code></span>
+              <div class="card-header-right">
+                <i class="icofont icofont-rounded-down"></i>
+                <i class="icofont icofont-refresh"></i>
+              </div>
+            </div>
+            <div class="card-block table-border-style">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th align="center">Pavillon</th>
+                    <th align="center">Etage</th>
+                    <th align="center">Intervalle Chambre</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Hover table card end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
