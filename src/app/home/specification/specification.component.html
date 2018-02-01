@@ -1,0 +1,80 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>Configuration Campus</h4>
+        <span>Definir les constraintes d'accés pour chaque Etage selon le Pavillon</span>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="index.html">
+              <i class="icofont icofont-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a href="#!">specification</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Page header end -->
+    <!-- Page-body start -->
+    <div class="page-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- Tooltips on textbox card start -->
+          <div class="card">
+            <div class="card-header">
+              <h5>Formulaire :</h5>
+              <div class="card-header-right">
+                <i class="icofont icofont-rounded-down"></i>
+                <i class="icofont icofont-refresh"></i>
+              </div>
+            </div>
+            <form #myFormSexeEtage="ngForm" (ngSubmit)="validate(myFormSexeEtage)"  novalidate>
+              <div class="card-block tooltip-icon button-list box-list">
+                <div class="input-group p-20 z-depth-0 waves-effect">
+                  <span class="input-group-addon" id="pavillon"><i class="ti-pinterest"></i></span>
+                  <select style="font-size: x-large;" (change)="getDataEtageOfPavilon(myFormSexeEtage.value.pavillonId)"  name="pavillonId" class="form-control" #pavillonId="ngModel" ngModel required [class.form-control-danger]="pavillonId.invalid && pavillonId.touched">
+                    <option disabled value="" selected hidden>Selectionner le pavillon</option>
+                    <option value="{{list.id}}" *ngFor="let list of pavillonClasse" >{{list.label}}</option>
+                  </select>
+                </div>
+                <div class="input-group p-20 z-depth-0 waves-effect">
+                  <span class="input-group-addon" id="etage"><i class="ti-layout-list-post"></i></span>
+                  <select style="font-size: x-large;" name="etageId" class="form-control" #etageId="ngModel" ngModel required [class.form-control-danger]="etageId.invalid && etageId.touched">
+                    <option disabled value="" selected hidden>Selectionner l'étage</option>
+                    <option value="{{list.id}}" *ngFor="let list of etageOfPavillonClasse;let i = index" >{{list.label}}</option>
+                  </select>
+                </div>
+                <div class="input-group p-20 z-depth-0 waves-effect">
+                  <span class="input-group-addon" id="sexe"><i class="icofont icofont-emo-smirk"></i></span>
+                  <select style="font-size: x-large;" name="demeurant" class="form-control" #demeurant="ngModel" ngModel required [class.form-control-danger]="demeurant.invalid && demeurant.touched">
+                    <option disabled value="" selected hidden>Selectionner le sexe des demeurants</option>
+                    <option value="Homme">Homme</option>
+                    <option value="Femme">Femme</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                </div>
+                <!--TODO add attribut nombre de position pour un etage -->
+                <!--<div class="input-group p-20 z-depth-0 waves-effect">
+                  <span class="input-group-addon" id="nombrePosition"><i class="icofont icofont-emo-smirk"></i></span>
+                  <input type="text" style="font-size: x-large;" name="nombrePosition" placeholder="Entrer le nombre de position" class="form-control" #nombrePosition="ngModel" ngModel required [class.form-control-danger]="nombrePosition.invalid && nombrePosition.touched">
+                </div>-->
+                <br>
+                <hr>
+                <div class="row">
+                  <div class="row offset-sm-3 col-sm-6 offset-sm-3">
+                    <button type="submit" class="btn btn-primary btn-outline-primary btn-block"><i class="icofont icofont-emo-nerd-smile"></i>valider</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- Tooltips on textbox card end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
