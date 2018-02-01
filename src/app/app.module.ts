@@ -10,6 +10,7 @@ import {AuthModule} from './auth/auth.module';
 import { FormsModule } from '@angular/forms';
 import {SpinnerModule} from "angular2-spinner/dist";
 import {HttpModule} from "@angular/http";
+declare var require:any;
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {HttpModule} from "@angular/http";
     AuthModule,
     FormsModule,
     SpinnerModule,
-    HttpModule
+    HttpModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

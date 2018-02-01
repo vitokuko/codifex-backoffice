@@ -21,14 +21,13 @@ export class DataServiceService {
   }
 
   addData(url,data){
-    console.log(JSON.stringify(data));
     return this.http.post(this.baseUrl + url, JSON.stringify(data), {headers: this.headers})
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'error server'));
   }
 
   patchData(url,data){
-    return this.http.patch(this.baseUrl + url + "/" + data.id, data)
+    return this.http.patch(this.baseUrl + url,JSON.stringify(data),{headers: this.headers})
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'error server'));
   }
