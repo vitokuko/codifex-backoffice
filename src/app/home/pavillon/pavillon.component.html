@@ -3,7 +3,7 @@
   <div class="page-wrapper">
     <div class="page-header">
       <div class="page-header-title">
-        <h4>Pavillons</h4>
+        <h4>Déclaration Pavillons & Etage</h4>
       </div>
       <div class="page-header-breadcrumb">
         <ul class="breadcrumb-title">
@@ -86,7 +86,7 @@
                             </div>
                           </div>
                         </li>
-                        <li>Exemple: Etage-1</li>
+                        <li>Exemple: 0-Etage</li>
                       </ul>
                     </div>
                     <div class="col-sm-4">
@@ -139,7 +139,7 @@
                 </div>
                 <div class="col-sm-9">
                   <h4>{{pavillonClasse.length}}</h4>
-                  <h6>Pavillon</h6>
+                  <h6>Pavillons</h6>
                 </div>
               </div>
             </div>
@@ -156,7 +156,7 @@
                 </div>
                 <div class="col-sm-9">
                   <h4>{{etageClasse.length}}</h4>
-                  <h6>Étage (max parmis les pavillons)</h6>
+                  <h6>Étages (max parmis les pavillons)</h6>
                 </div>
               </div>
             </div>
@@ -172,8 +172,8 @@
                   <i class="icofont icofont-hospital"></i>
                 </div>
                 <div class="col-sm-9">
-                  <h4>0</h4>
-                  <h6>Chambre (max parmis les pavillons)</h6>
+                  <h4>{{nombreChambreTotale}}</h4>
+                  <h6>Chambres</h6>
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@
   <div class="page-wrapper">
     <div class="page-header">
       <div class="page-header-title">
-        <h4>Déclarations</h4>
+        <h4>Relation Entre Eux - Affectation</h4>
       </div>
       <div class="page-header-breadcrumb">
         <ul class="breadcrumb-title">
@@ -218,35 +218,36 @@
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label">Pavillon</label>
                   <div class="col-sm-8">
-                    <select name="selectPavillon" class="form-control" #selectPavillon="ngModel" ngModel required>
+                    <select name="pavillonId" class="form-control" #pavillonId="ngModel" ngModel required [class.form-control-danger]="pavillonId.invalid && pavillonId.touched">
                       <option disabled value="" selected hidden>Selectionner une valeur seulement</option>
                       <option value="{{list.id}}" *ngFor="let list of pavillonClasse" >{{list.label}}</option>
                     </select>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 col-form-label">Etage</label>
+                  <label class="col-sm-4 col-form-label">Nombre d'Étage</label>
                   <div class="col-sm-8">
-                    <select name="selectEtage" class="form-control form-bg-primary" #selectEtage="ngModel" ngModel required>
+                    <select name="etageId" (change)="getNombreEtage(myFormRelation.value.etageId)"  class="form-control form-bg-primary" #etageId="ngModel" ngModel required [class.form-control-danger]="etageId.invalid && etageId.touched">
                       <option disabled value="" selected hidden>Selectionner une valeur seulement</option>
-                      <option value="{{list.id}}" *ngFor="let list of etageClasse" >{{list.label}}</option>
+                      <option value="{{i}}" *ngFor="let list of etageClasse;let i = index" >{{list.label}}</option>
                     </select>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-4 col-form-label">Intervalle - Chambre</label>
+                <div class="form-group row" *ngFor="let i of listEtage">
+                  <label class="col-sm-4 col-form-label">Intervalle - Chambre - Etage-{{i.index}}</label>
                   <div class="col-sm-8">
                     <ion-range-slider #advancedSliderElement
                                       type="double"
-                                      min="0"
-                                      max="100"
-                                      from="0"
-                                      from_min="0"
-                                      from_max="60"
-                                      from_shadow="true"
-                                      to="10"
-                                      to_min="10"
-                                      to_max="100"
+                                      min="{{i.min}}"
+                                      max="{{i.max}}"
+                                      from="{{i.from}}"
+                                      from_fixed="true"
+                                      from_min="{{i.from_min}}"
+                                      from_max="{{i.from_max}}"
+                                      from_shadow="{{i.from_shadow}}"
+                                      to="{{i.to}}"
+                                      to_min="{{i.to_min}}"
+                                      to_max="{{i.to_max}}"
                                       to_shadow="true"
                                       grid="true"
                                       grid_num="5"
@@ -254,9 +255,10 @@
                                       postfix=" "
                                       max_postfix="Max "
                                       decorate_both="true"
-                                      (onUpdate)="update(advancedSliderElement, $event)"
-                                      (onChange)="update(advancedSliderElement, $event)"
-                                      (onFinish)="finish(advancedSliderElement, $event)"></ion-range-slider>
+                                      (onUpdate)="update(i,advancedSliderElement,$event)"
+                                      (onChange)="update(i,advancedSliderElement,$event)"
+                                      (onFinish)="update(i,advancedSliderElement,$event)">
+                    </ion-range-slider>
                   </div>
                 </div>
                 <br>
@@ -273,7 +275,7 @@
       </div>
     </div>
   </div>
-  <div class="page-wrapper">
+  <!--<div class="page-wrapper">
     <div class="page-header">
       <div class="page-header-title">
         <h4>Visualisation(temps reel)</h4>
@@ -293,7 +295,6 @@
     <div class="page-body">
       <div class="row">
         <div class="col-md-12">
-          <!-- Hover table card start -->
           <div class="card">
             <div class="card-header">
               <h5>Tableau de liaison </h5>
@@ -308,39 +309,27 @@
                 <table class="table table-hover">
                   <thead>
                   <tr>
-                    <th>#</th>
+                    <th>index</th>
                     <th align="center">Pavillon</th>
-                    <th align="center">Etage</th>
-                    <th align="center">Intervalle Chambre</th>
+                    <th align="center">Nombre Etage</th>
+                    <th align="center">Nombre Chambre</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
+                  <tr *ngFor="let obj of pavEtageChambre;let i= index">
+                    <th scope="row">{{i}}</th>
+                    <td>{{obj.label}}</td>
+                    <td>{{obj.nombreEtage}}</td>
+                    <td>{{obj.nombreChambre}}</td>
                   </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-          <!-- Hover table card end -->
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 </div>
+
