@@ -13,16 +13,16 @@ import {Alert} from "selenium-webdriver";
   selector: 'app-pavillon',
   templateUrl: './pavillon.component.html',
   styleUrls: ['./pavillon.component.css'],
-  providers:[ToasterService,DataServiceService]
+  providers: [ToasterService, DataServiceService]
 })
 export class PavillonComponent implements OnInit {
 
   @ViewChild('advancedSliderElement')
   advancedSliderElement: IonRangeSliderComponent;
   @ViewChild('ngForm')
-  private myFormPavillon:NgForm;
-  private myFormEtage:NgForm;
-  private myFormRelation:NgForm;
+  private myFormPavillon: NgForm;
+  private myFormEtage: NgForm;
+  private myFormRelation: NgForm;
   //private myFormChambre:NgForm;
   //pattNombreChambre = '^0*(?:[1-9][0-9]?|100)';
 
@@ -32,19 +32,19 @@ export class PavillonComponent implements OnInit {
   pattPavillon = '^Pavillon-[A-Z]';
   pavUrl = 'pavillons';
   pavEtage = 'pavillonEtages';
-  pavillonClasse : Array<Pavillon> = new Array<Pavillon>();
-  labelPavillon :Array<any> = new Array<any>();
+  pavillonClasse: Array<Pavillon> = new Array<Pavillon>();
+  labelPavillon: Array<any> = new Array<any>();
   urlChambre = 'chambres';
-  listPavId=[];
+  listPavId = [];
 
   /*
    * begin déclaration variable étage
    */
   etageUrl = 'etages';
   pattEtage = '^[0-9]-Etage';
-  etageClasse : Array<Etage> = new Array<Etage>();
-  labelEtage :Array<any> = new Array<any>();
-  listEtage : Array<any> = new Array<any>();
+  etageClasse: Array<Etage> = new Array<Etage>();
+  labelEtage: Array<any> = new Array<any>();
+  listEtage: Array<any> = new Array<any>();
 
   /*
    * begin déclaration variable relation pavillon etage chambre
@@ -60,16 +60,15 @@ export class PavillonComponent implements OnInit {
   // configuration du toaster
   public toasterconfig: ToasterConfig = new ToasterConfig({positionClass: 'toast-top-center'});
 
-  constructor(private toasterService: ToasterService,private dataService:DataServiceService) {
+  constructor(private toasterService: ToasterService, private dataService: DataServiceService) {
     this.toasterService = toasterService;
     /*var eventSource = new window['EventSource']("http://codifex-api.herokuapp.com/api/pavillons/change-stream? format=change-stream");
-    eventSource.addEventListener('data', function(msg) {
-      var raw = msg.data;
-      var data = JSON.parse(raw);
-      console.log(data); // => change obj
-    });*/
+     eventSource.addEventListener('data', function(msg) {
+     var raw = msg.data;
+     var data = JSON.parse(raw);
+     console.log(data); // => change obj
+     });*/
   }
-
 
 
   ngOnInit() {
@@ -79,7 +78,7 @@ export class PavillonComponent implements OnInit {
     //this.getPavEtageChambre();
   }
 
-  popToast(type,titre,message) {
+  popToast(type, titre, message) {
     const toast: Toast = {
       type: type,
       title: titre,
@@ -91,7 +90,7 @@ export class PavillonComponent implements OnInit {
   /*
    * begin définition fonction pavillon
    */
-  getDataPavillon(){
+  getDataPavillon() {
     this.dataService.getData(this.pavUrl)
       .subscribe(
         data => {
@@ -103,24 +102,25 @@ export class PavillonComponent implements OnInit {
       );
   }
 
-  getLabelPavillon(data){
-    for(let i=0;i < data.length;i++){
-      if (!this.labelPavillon.includes(data[i].label)){
+  getLabelPavillon(data) {
+    for (let i = 0; i < data.length; i++) {
+      if (!this.labelPavillon.includes(data[i].label)) {
         this.labelPavillon.push(data[i].label);
       }
     }
     console.log(data);
   }
-  addPavillon(value:NgForm){
+
+  addPavillon(value: NgForm) {
     this.getDataPavillon();
-    if(value.form.status == "VALID"){
-      if (this.labelPavillon != null && !this.labelPavillon.includes(value.value.label)){
-        this.dataService.addData(this.pavUrl,value.value)
+    if (value.form.status == "VALID") {
+      if (this.labelPavillon != null && !this.labelPavillon.includes(value.value.label)) {
+        this.dataService.addData(this.pavUrl, value.value)
           .subscribe(
             data => {
               value.onReset();
               this.handlePavillon(data);
-              this.popToast('success','Correct','Ajout réussi');
+              this.popToast('success', 'Correct', 'Ajout réussi');
               this.getDataPavillon();
             },
             error => {
@@ -128,33 +128,34 @@ export class PavillonComponent implements OnInit {
               this.handleError(error);
             }
           );
-      }else {
+      } else {
         value.onReset();
-        this.popToast('error','Erreur','Ce Pavillon existe déja');
+        this.popToast('error', 'Erreur', 'Ce Pavillon existe déja');
       }
-    }else{
+    } else {
       value.onReset();
-      this.popToast('error','Erreur','Erreur de syntaxe');
+      this.popToast('error', 'Erreur', 'Erreur de syntaxe');
     }
   }
-  handlePavillon(data){
+
+  handlePavillon(data) {
     console.log(data);
   }
 
   /*
    * begin définition fonction Étage
    */
-  addEtage(value){
+  addEtage(value) {
     this.getDataEtage();
     console.log(value);
-    if(value.form.status == "VALID"){
-      if (this.labelEtage != null && !this.labelEtage.includes(value.value.label)){
-        this.dataService.addData(this.etageUrl,value.value)
+    if (value.form.status == "VALID") {
+      if (this.labelEtage != null && !this.labelEtage.includes(value.value.label)) {
+        this.dataService.addData(this.etageUrl, value.value)
           .subscribe(
             data => {
               value.onReset();
               this.handleEtage(data);
-              this.popToast('success','Correct','Ajout réussi');
+              this.popToast('success', 'Correct', 'Ajout réussi');
               this.getDataEtage();
             },
             error => {
@@ -162,16 +163,17 @@ export class PavillonComponent implements OnInit {
               this.handleError(error);
             }
           );
-      }else {
+      } else {
         value.onReset();
-        this.popToast('error','Erreur','Cette Etage existe déja');
+        this.popToast('error', 'Erreur', 'Cette Etage existe déja');
       }
-    }else{
+    } else {
       value.onReset();
-      this.popToast('error','Erreur','Erreur de syntaxe');
+      this.popToast('error', 'Erreur', 'Erreur de syntaxe');
     }
   }
-  getDataEtage(){
+
+  getDataEtage() {
     this.dataService.getData(this.etageUrl)
       .subscribe(
         data => {
@@ -182,16 +184,17 @@ export class PavillonComponent implements OnInit {
         error => console.log(error)
       );
   }
-  getLabelEtage(data){
-    for(let i=0;i < data.length;i++){
-      if (!this.labelEtage.includes(data[i].label)){
+
+  getLabelEtage(data) {
+    for (let i = 0; i < data.length; i++) {
+      if (!this.labelEtage.includes(data[i].label)) {
         this.labelEtage.push(data[i].label);
       }
     }
     console.log(data);
   }
 
-  handleEtage(data){
+  handleEtage(data) {
     console.log(data);
   }
 
@@ -199,16 +202,16 @@ export class PavillonComponent implements OnInit {
    * begin définition fonction Chambre
    */
 
-  addChambre(value){
+  addChambre(value) {
     console.log(value);
   }
 
-  getDataChambre(){
+  getDataChambre() {
     this.dataService.getData(this.urlChambre)
       .subscribe(
         data => {
-            this.nombreChambreTotale = data.length;
-            console.log(this.nombreChambreTotale);
+          this.nombreChambreTotale = data.length;
+          console.log(this.nombreChambreTotale);
         },
         error => this.handleError(error)
       );
@@ -217,113 +220,123 @@ export class PavillonComponent implements OnInit {
   /*
    * begin définition fonction Relation
    */
-  addRelation(value:NgForm){
+  addRelation(value: NgForm) {
     this.listPavEtage2 = [];
     var objPavEtage;
     console.log(value.value);
     console.log(this.listEtage);
-    if(value.form.status == "VALID") {
+    if (value.form.status == "VALID") {
       if (!this.listPavId.includes(value.value.pavillonId)) {
         this.listPavId.push(value.value.pavillonId);
         console.log(value);
-        console.log("etageId ",value.value.etageId);
-        console.log("pavillonId ",value.value.pavillonId);
+        console.log("etageId ", value.value.etageId);
+        console.log("pavillonId ", value.value.pavillonId);
 
-        this.iterationNombreEtage(0,value.value.etageId,value.value.pavillonId);
+        this.iterationNombreEtage(0, value.value.etageId, value.value.pavillonId);
 
-      }else {
+      } else {
         value.onReset();
-        this.popToast('error','Erreur','L\'objet existe déjà!!! ');
+        this.popToast('error', 'Erreur', 'L\'objet existe déjà!!! ');
       }
-    }else {
+    } else {
       value.onReset();
-      this.popToast('error','Erreur','Invalid');
+      this.popToast('error', 'Erreur', 'Invalid');
     }
   }
 
-  createRoom(from,to,pavEtageId)
-  {
+  createRoom(from, to, pavEtageId) {
     console.log(from)
-    if (from==to)
-    {
-      let objChambre = {label:from, pavillonEtageId:pavEtageId};
-      this.dataService.addData(this.urlChambre,objChambre)
+    if (from == to) {
+      let objChambre = {label: from, pavillonEtageId: pavEtageId};
+      this.dataService.addData(this.urlChambre, objChambre)
         .subscribe(
           data => console.log(data),
           error => console.log(error)
         )
     }
-    else
-    {
-      let objChambre = {label:from, pavillonEtageId:pavEtageId
+    else {
+      let objChambre = {
+        label: from, pavillonEtageId: pavEtageId
       };
-      this.dataService.addData(this.urlChambre,objChambre)
+      this.dataService.addData(this.urlChambre, objChambre)
         .subscribe(
           data => console.log(data),
           error => console.log(error)
         );
-      this.createRoom(from+1,to, pavEtageId)
+      this.createRoom(from + 1, to, pavEtageId)
     }
   }
 
-  iterationPavEtage2(debut,pavEtageId){
-      this.createRoom(this.listEtage[debut].from,this.listEtage[debut].to, pavEtageId);
+  iterationPavEtage2(debut, pavEtageId) {
+    this.createRoom(this.listEtage[debut].from, this.listEtage[debut].to, pavEtageId);
   }
 
-  getIdByEtageName(debut,label){
-    if (debut == this.etageClasse.length-1){
-      if (label == this.etageClasse[debut].label){
-        return this.etageClasse[debut].id;
+  getIdByEtageName(debut, label) {
+    for (let i = debut; i <= this.etageClasse.length - 1; i++) {
+      if (label == this.etageClasse[i].label) {
+        alert(i+'eme if: ' + label + ' - ' + this.etageClasse[i].id);
+        return this.etageClasse[i].id;
       }
-    }else{
-      if (label == this.etageClasse[debut].label){
-        return this.etageClasse[debut].id;
-      }
-      this.getIdByEtageName(debut+1,label);
+    }
+    /*console.log(this.etageClasse);
+     alert(debut + ' - '+  this.etageClasse.length);
+     if (debut == this.etageClasse.length-1){
+     if (label == this.etageClasse[debut].label){
+     alert('1eme if: '+label + ' - '+this.etageClasse[debut].id);
+     return this.etageClasse[debut].id;
+     }
+     }else{
+     if (label == this.etageClasse[debut].label){
+     alert('2eme if: '+label + ' - '+this.etageClasse[debut].id);
+     return this.etageClasse[debut].id;
+     }
+     this.getIdByEtageName(debut+1,label);
+     }*/
+  }
+
+  iterationNombreEtage(debut, fin, idPav) {
+    if (debut == fin) {
+      let etageId = this.getIdByEtageName(0, debut + '-Etage');
+      console.log(debut + ' - ' + etageId);
+      this.postPavEtage(this.pavEtage, {etageId: etageId, pavillonId: idPav}, debut);
+    } else {
+      let etageId = this.getIdByEtageName(0, debut + '-Etage');
+      //alert(etageId);
+      this.postPavEtage(this.pavEtage, {etageId: etageId, pavillonId: idPav}, debut);
+      this.iterationNombreEtage(debut + 1, fin, idPav);
     }
   }
 
-  iterationNombreEtage(debut,fin,idPav){
-    if (debut == fin){
-      let etageId =  this.getIdByEtageName(0,debut+'-Etage');
-      this.postPavEtage(this.pavEtage,{etageId: etageId, pavillonId: idPav},debut);
-    }else{
-      let etageId =  this.getIdByEtageName(0,debut+'-Etage');
-      this.postPavEtage(this.pavEtage,{etageId: etageId, pavillonId: idPav}, debut);
-      this.iterationNombreEtage(debut+1,fin, idPav);
-    }
-  }
-
-  postPavEtage(url,obj,current){
+  postPavEtage(url, obj, current) {
     this.dataService.addData(url, obj)
       .subscribe(
         data => {
           let pavEtageId = data.id;
-          this.popToast('success','Ajout',' Successful!!!');
+          this.popToast('success', 'Ajout', 'Relation Pav Etage Successful!!!');
           //boucle qui permet d'ajouter dans l'objet objChambre1 des chambres pour chaque etage selon le pavillon
-          this.iterationPavEtage2(current,pavEtageId);
+          this.iterationPavEtage2(current, pavEtageId);
           console.log(this.listEtage)
         },
         error => this.handleError(error)
       );
   }
 
-  getNombreEtage(value){
+  getNombreEtage(value) {
     console.log(value);
     this.listEtage = [];
-    for (let i=0;i<= value;i++){
+    for (let i = 0; i <= value; i++) {
       this.listEtage.push(
         {
-          index:i,
-          min:1,
-          max:200,
-          from:0,
-          from_min:0,
-          from_max:60,
-          from_shadow:true,
-          to:10,
-          to_min:10,
-          to_max:100
+          index: i,
+          min: 1,
+          max: 200,
+          from: 0,
+          from_min: 0,
+          from_max: 60,
+          from_shadow: true,
+          to: 10,
+          to_min: 10,
+          to_max: 100
         }
       );
     }
@@ -333,55 +346,55 @@ export class PavillonComponent implements OnInit {
 
   //fonction de slider intervalle chambre
   //TODO gerer le bug emit => slider
-  update(slider,sliderContainer,event) {
+  update(slider, sliderContainer, event) {
     console.log(slider);
-    if (slider.index < this.listEtage.length-1){
+    if (slider.index < this.listEtage.length - 1) {
       this.listEtage[slider.index].from = sliderContainer.from;
       this.listEtage[slider.index].to = sliderContainer.to;
-      this.listEtage[slider.index+1].from = sliderContainer.to+1;
-      this.listEtage[slider.index+1].from_min = sliderContainer.to+1;
-      this.listEtage[slider.index+1].from_max = sliderContainer.from_max + (sliderContainer.to - sliderContainer.from);
-      this.listEtage[slider.index+1].to = sliderContainer.to + (sliderContainer.to - sliderContainer.from);
-      this.listEtage[slider.index+1].to_min = sliderContainer.to + (sliderContainer.to - sliderContainer.from);
-      this.listEtage[slider.index+1].to_max = sliderContainer.to_max + (sliderContainer.to_max-sliderContainer.to_min);
+      this.listEtage[slider.index + 1].from = sliderContainer.to + 1;
+      this.listEtage[slider.index + 1].from_min = sliderContainer.to + 1;
+      this.listEtage[slider.index + 1].from_max = sliderContainer.from_max + (sliderContainer.to - sliderContainer.from);
+      this.listEtage[slider.index + 1].to = sliderContainer.to + (sliderContainer.to - sliderContainer.from);
+      this.listEtage[slider.index + 1].to_min = sliderContainer.to + (sliderContainer.to - sliderContainer.from);
+      this.listEtage[slider.index + 1].to_max = sliderContainer.to_max + (sliderContainer.to_max - sliderContainer.to_min);
       //this.listEtage[slider.index+1].to = this.listEtage[slider.index+1].from+100;
-      console.log(slider.index , sliderContainer);
+      console.log(slider.index, sliderContainer);
       sliderContainer.onUpdate = event;
-      console.log("listEtage",this.listEtage);
+      console.log("listEtage", this.listEtage);
     }
-    if (slider.index == this.listEtage.length-1){
+    if (slider.index == this.listEtage.length - 1) {
       this.listEtage[slider.index].from = sliderContainer.from;
       this.listEtage[slider.index].to = sliderContainer.to;
-      console.log(slider.index , sliderContainer);
+      console.log(slider.index, sliderContainer);
       sliderContainer.onUpdate = event;
-      console.log("listEtage",this.listEtage);
+      console.log("listEtage", this.listEtage);
     }
 
   }
 
-  getPavEtageChambre(){
+  getPavEtageChambre() {
     /*this.pavEtageChambre = [];
-    this.dataService.getData(this.pavUrl + '?filter='+encodeURIComponent('{"include":{"etages":"chambres"}}'))
-      .subscribe(
-        data => {
-          this.handlePavEtageChambre(data);
-        },
-        error => this.handleError(error)
-      );*/
+     this.dataService.getData(this.pavUrl + '?filter='+encodeURIComponent('{"include":{"etages":"chambres"}}'))
+     .subscribe(
+     data => {
+     this.handlePavEtageChambre(data);
+     },
+     error => this.handleError(error)
+     );*/
   }
-  handlePavEtageChambre(data){
+
+  handlePavEtageChambre(data) {
     this.pavEtageChambre = data;
     /*this.pavEtageChambre.forEach(function(pavillon){
-      pavillon.nombreEtage = pavillon.etages.length;
-      pavillon.nombreChambre = 0;
-        pavillon.etages.forEach(function (etages) {
-           pavillon.nombreChambre = pavillon.nombreChambre + etages.chambres.length;
-          console.log("etages : ", etages)
-        })
-    });*/
-    console.log("PavEtageChambre : ",this.pavEtageChambre);
+     pavillon.nombreEtage = pavillon.etages.length;
+     pavillon.nombreChambre = 0;
+     pavillon.etages.forEach(function (etages) {
+     pavillon.nombreChambre = pavillon.nombreChambre + etages.chambres.length;
+     console.log("etages : ", etages)
+     })
+     });*/
+    console.log("PavEtageChambre : ", this.pavEtageChambre);
   }
-
 
 
   finish(slider) {
@@ -390,12 +403,12 @@ export class PavillonComponent implements OnInit {
   }
 
   setAdvancedSliderTo(from, to) {
-    this.advancedSliderElement.update({from: from, to:to});
+    this.advancedSliderElement.update({from: from, to: to});
   }
 
 
-  handleError(error){
-    this.popToast('error','Erreur',error.json);
+  handleError(error) {
+    this.popToast('error', 'Erreur', error.json);
     console.log(error);
   }
 }

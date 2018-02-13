@@ -1,3 +1,4 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 <section class="login p-fixed d-flex text-center bg-primary common-img-bg">
   <!-- Container-fluid starts -->
   <div class="container-fluid">
@@ -5,7 +6,7 @@
       <div class="col-sm-12">
         <!-- Authentication card start -->
         <div class="login-card card-block auth-body">
-          <form class="md-float-material" #myForm="ngForm" (ngSubmit)="login(myForm.value)" novalidate>
+          <form class="md-float-material" #myForm="ngForm" (ngSubmit)="login(myForm)" novalidate>
             <div class="text-center">
               <img src="assets/images/Online-Campus-Icon.png" alt="logo.png" width="200" style="border-radius:100%;">
             </div>
@@ -24,11 +25,11 @@
               </div>
               <p class="text-inverse b-b-default text-left p-b-5">Sign in with your regular account</p>
               <div class="input-group">
-                <input type="email" name="email" class="form-control" placeholder="Username" #email="ngModel" [class.form-control-danger]="email.invalid && email.touched" [pattern]="emailPattern" ngModel required>
+                <input type="email" name="email" class="form-control" placeholder="Enter your email please" #email="ngModel" [class.form-control-danger]="email.invalid && email.touched" [pattern]="emailPattern" ngModel required>
                 <span class="md-line"></span>
               </div>
               <div class="input-group">
-                <input type="password" name="password" class="form-control" placeholder="password" #password="ngModel" [class.form-control-danger]="password.invalid && password.touched" ngModel required>
+                <input type="password" name="password" class="form-control" placeholder="Enter your password please" #password="ngModel" [class.form-control-danger]="password.invalid && password.touched" ngModel required>
                 <span class="md-line"></span>
               </div>
               <div class="row m-t-25 text-left">
@@ -73,4 +74,4 @@
   </div>
   <!-- end of container-fluid -->
 </section>
-<a href="/home" id="unique" ></a>
+<a href="/home/accueil" id="home" ></a>

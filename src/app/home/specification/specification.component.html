@@ -45,7 +45,7 @@
                   <span class="input-group-addon" id="etage"><i class="ti-layout-list-post"></i></span>
                   <select style="font-size: x-large;" name="etageId" class="form-control" #etageId="ngModel" ngModel required [class.form-control-danger]="etageId.invalid && etageId.touched">
                     <option disabled value="" selected hidden>Selectionner l'étage</option>
-                    <option value="{{list.id}}" *ngFor="let list of etageOfPavillonClasse;let i = index" >{{list.label}}</option>
+                    <option value="{{list.etage.id}}" *ngFor="let list of etageOfPavillonClasse;let i = index" >{{list.etage.label}}</option>
                   </select>
                 </div>
                 <div class="input-group p-20 z-depth-0 waves-effect">

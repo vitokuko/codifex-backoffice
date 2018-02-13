@@ -17,7 +17,8 @@ export class SpecificationComponent implements OnInit {
   pavillonClasse = [];
   etageOfPavillonClasse = [];
   pavillonEtageClasse = [];
-  urlPavEtage = 'pavillon-etages';
+  urlPavEtage = 'pavillonEtages';
+  pavillonId;
 
   // configuration du toaster
   public toasterconfig: ToasterConfig = new ToasterConfig({positionClass: 'toast-top-center'});
@@ -46,12 +47,14 @@ export class SpecificationComponent implements OnInit {
     console.log(value.value);
     console.log(this.urlPavEtage);
     this.updateDemeurant(value.value);
+    value.onReset();
   }
 
   updateDemeurant(valeur){
     this.dataService.getData(this.urlPavEtage + '?filter='+encodeURIComponent('{"where":{"etageId":"'+valeur.etageId+'","pavillonId":"'+valeur.pavillonId+'"}}'))
       .subscribe(
         data => {
+          this.popToast("success", "Successful", "mise à jour reussit");
           console.log("identifiant : ",this.urlPavEtage + '/'+ data[0].id," value : ",valeur);
           this.dataService.patchData(this.urlPavEtage + '/'+ data[0].id,valeur)
             .subscribe(
@@ -75,7 +78,14 @@ export class SpecificationComponent implements OnInit {
   }
 
   getDataEtageOfPavilon(value:NgForm){
-    this.dataService.getData(this.pavUrl+'/'+value+'/etages'+'?filter='+'{"order":"label"}')
+    this.pavillonId = value;
+    console.log(value);
+    this.dataService
+      .getData(
+        this.urlPavEtage +
+          "?filter=" +
+          '{"include":["etage","pavillon"],"where":{"pavillonId":"'+ this.pavillonId +'"}}'
+      )
       .subscribe(
         data => {
           this.etageOfPavillonClasse = data;

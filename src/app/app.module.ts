@@ -10,14 +10,15 @@ import {AuthModule} from './auth/auth.module';
 import { FormsModule } from '@angular/forms';
 import {SpinnerModule} from "angular2-spinner/dist";
 import {HttpModule} from "@angular/http";
+import { ToasterModule } from "angular2-toaster";
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule
+} from "@angular/platform-browser/animations";
 declare var require:any;
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    AuthComponent
-  ],
+  declarations: [AppComponent, HomeComponent, AuthComponent],
   imports: [
     BrowserModule,
     routing,
@@ -26,8 +27,11 @@ declare var require:any;
     FormsModule,
     SpinnerModule,
     HttpModule,
+    ToasterModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
